@@ -1,0 +1,360 @@
+/**
+ * 2016/08/05
+ */
+
+ html, body, div, span, applet, object, iframe,
+ h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+ a, abbr, acronym, address, big, cite, code,
+ del, dfn, em, img, ins, kbd, q, s, samp,
+ small, strike, strong, sub, sup, tt, var,
+ b, u, i, center,
+ dl, dt, dd, ol, ul, li,
+ fieldset, form, label, legend,
+ table, caption, tbody, tfoot, thead, tr, th, td,
+ article, aside, canvas, details, embed,
+ figure, figcaption, footer, header, hgroup,
+ menu, nav, output, ruby, section, summary,
+ time, mark, audio, video {
+ 	margin: 0;
+ 	padding: 0;
+ 	border: 0;
+ }
+
+
+/* body默认是有margin的 */
+html, body {
+ 	height: 100%;
+  /*overflow: hidden;*/
+ }
+body {
+  min-width: 1000px;
+  min-height: 500px;
+ 	background: -webkit-linear-gradient(-66deg, #0072ff 0%, #00a8ff 55%, white 55%, white 100%);
+  font-family: "Helvitica Neue",Helvitica,Arial,
+               "Hiragino Sans GB","Microsoft YaHei",
+               "Arial Regular","Microsoft JhengHei",sans-serif;
+ }
+
+
+img.logo {
+  display: inline-block;
+  padding: 3% 10%;
+  float: left;
+}
+
+h1 {
+  padding: 3% 10%;
+  text-align: right;
+  color: white;
+  line-height: 58px;
+  clear: right;
+}
+
+ /* margin,padding是以父元素的width为基础的 */
+.select-upload, .result {
+  position: relative;
+ 	float: left;
+	margin: 1.5% 10%;
+  padding: 0;
+  width: 30%;
+  height: 70%;
+  /*padding: 20px;*/
+	box-sizing: border-box;
+	background-color: white;
+	/*box-shadow: 0 0 100px -30px rgba(0, 0, 0, 0.5);*/
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+/* 标题文字 */
+.header span {
+  color: white;
+  line-height: 40px;
+  padding-left: 10px;
+}
+.header .icon {
+  position: relative;
+  top: 1px;
+  margin-right: 7px;
+}
+
+.select-upload > .header {
+  height: 40px;
+  background: -webkit-linear-gradient(-66deg, rgb(0, 129, 254), rgb(0, 144, 250));
+}
+
+.select-upload form {
+  display: none;
+}
+.select-upload .preview {
+  position: absolute;
+  width: 100%;
+  top: 40px;
+  left: 0;
+  bottom: 0;
+
+}
+.hover:hover {
+  box-shadow: 0 20px 30px #d5edff;
+}
+.preview .select-file {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  line-height: 100px;
+  background: -webkit-linear-gradient(-66deg, rgb(0, 161, 251), rgb(0, 167, 255));
+  border-radius: 50%;
+  /*cursor: pointer;*/
+  transition: all .5s;
+}
+.select-file > span:first-child {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.select-file .upload-operation {
+  display: none;
+}
+.selected .upload-operation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+}
+.upload-operation > span {
+  display: block;
+}
+.upload-operation span.file-name {
+  flex-grow: 1;
+  margin: auto 10px;
+  text-align: left;
+  max-width: 50%;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.upload-operation > span:not(:first-child) {
+  padding: 3px 10px;
+  margin-right: 10px;
+  height: 20px;
+  line-height: 20px;
+  border: 2px solid white;
+}
+.upload-operation > .cancel {
+  text-align: right;
+}
+.upload-operation > span:not(:first-child) {
+  transition: color .5s, background-color .5s;
+  cursor: pointer;
+}
+.upload-operation > span:not(:first-child):hover {
+  background-color: white;
+  color: rgb(0, 161, 251);
+}
+
+/* 选择图片后，原选择按钮靠下 */
+.preview > img {
+  display: block;
+  margin: 10px auto;
+  max-width: 90%;
+  max-height: 85%;
+}
+.preview .selected {
+  top: 100%;
+  transform: translate(-50%, -100%);
+  width: 100%;
+  height: 40px;
+  color: white;
+  line-height: 40px;
+  border-radius: 0;
+  transition: all .5s;
+}
+.selected > span:first-child {
+  display: none;
+}
+
+/*.selected:not(:first-child) {
+  display: inline-block;
+  padding: 5px;
+}*/
+
+
+
+/*******************已选择文件************************/
+.result .header {
+  height: 40px;
+  background: -webkit-linear-gradient(-66deg, rgb(0, 149, 248), #00a8ff);
+}
+.header .back {
+  padding: 0;
+}
+.back img {
+  display: block;
+  float: left;
+  transition: all .5s;
+}
+.back img:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.back span {
+  float: left;
+  display: block;
+  line-height: 40px;
+  padding: 0;
+  margin-left: 2px;
+}
+.result-list span.back {
+  display: none;
+}
+.result-show span:first-child {
+  display: block;
+}
+.result-show span:first-child {
+  display: none;
+}
+
+
+.result .content {
+  position: absolute;
+  width: 200%;
+  left: 0;
+  top: 40px;
+  bottom: 0;
+  transition: all .5s;
+}
+
+.content .file-list {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  list-style: none;
+  overflow: auto;
+}
+
+/* 滚动条样式 */
+#mCSB_1_container {
+	margin-right: 0;
+}
+#mCSB_1_scrollbar_vertical {
+  width: 8px;
+	opacity: 0;
+}
+.file-list:hover #mCSB_1_scrollbar_vertical {
+	opacity: 1;
+}
+._mCS_1 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+  margin: 0;
+  width: 100%;
+  border-radius: 0;
+	background-color: #ccc;
+}
+._mCS_1 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover {
+  background-color: #ccc;
+}
+._mCS_1 .mCSB_scrollTools .mCSB_draggerRail {
+  margin: 0;
+  width: 100%;
+  border-radius: 0;
+	background-color: #f1f1f1;
+}
+.mCSB_dragger_bar {
+  background-color: #ccc;
+}
+/* 滚动条样式结束 */
+
+.file-list {
+  transition: all .5s;
+}
+.file-list .list-item {
+  position: relative;
+  /*left: 0;*/
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: background-color .5s;
+  border-bottom: 1px solid #eee;
+  cursor: default;
+}
+.file-list .list-item:hover {
+  background-color: #eee;
+}
+.list-item img {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+}
+
+.list-item .info {
+  flex-grow: 1;
+  height: 100%;
+}
+.info p {
+  overflow: hidden;
+  white-space: nowrap;
+  /*word-break: break-all;*/
+  text-overflow: ellipsis;
+}
+.info p:first-child {
+  font-size: 16px;
+  /*line-height: 2;*/
+}
+.info p:last-child {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #999;
+}
+
+.list-item .operation {
+  width: 90px;
+  /*height: 100%;*/
+  font-size: 16px;
+}
+.operation .icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  line-height: 30px;
+  cursor: pointer;
+  transition: all .5s;
+}
+.operation .display {
+  margin-right: 5px;
+  color: #00a8ff;
+}
+.operation .display:hover {
+  color: white;
+  background-color: #00a8ff;
+}
+.operation .delete {
+  color: rgb(232, 17, 35);
+}
+.operation .delete:hover {
+  color: white;
+  background-color: rgb(232, 17, 35);
+}
+
+
+.content .img-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
+.img-display img {
+  /*display: block;*/
+  max-width: 100%;
+  max-height: 100%;
+}

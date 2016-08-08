@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC 
+		"-//Apache Struts//XWork Validator 1.0.2//EN" 
+		"http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+<validators>
+	<field name="userName">
+		<field-validator type="requiredstring" short-circuit="true">
+			<param name="trim">true</param>
+			<message>name字段为必填字段</message>
+		</field-validator>
+	</field>
+	
+	<!-- <field name="password">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>password字段为必填字段</message>
+		</field-validator>
+	</field> -->
+	
+	<validator type="requiredstring" short-circuit="true">
+		<param name="fieldName">password</param>
+		<param name="trim">true</param>
+		<message>password字段为必填字段</message>
+	</validator>
+	
+</validators>
+        

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+          "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!-- 全局国际化资源文件 -->
+	<constant name="struts.custom.i18n.resources" value="mess"/>
+	<!-- 国际化编码字符集 -->
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<!-- <constant name="struts.enable.DynamicMethodInvocation" value="true" />  -->
+	
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.convention.classes.reload" value="true"/>
+	
+	
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+	
+	<!-- Action -->
+	<package name="demo" extends="struts-default"  >
+	
+		<action name="upload" class="me.lishuai.strutsdemo.actions.UploadAction">
+			<!-- 约定优于配置，要使下面的配置生效，须取消struts2的“约定”，移除convention插件 -->
+			<param name="savePath">/upload/</param>
+			<result name="success">/WEB-INF/content/upload-success.jsp</result>
+			<result name="input">/WEB-INF/content/upload-input.jsp</result>
+		</action>
+	
+	<!-- 通配符配置method失败，配置class成功，好像只要用{}配置method就报错 -->
+		<!-- <action name="login" class="me.lishuai.login.LoginAction" >
+			<result name="input">/login.jsp</result>
+			<result name="error" type="plainText">
+				<param name="location">/err.jsp</param>
+				<param name="charSet">UTF-8</param>
+			</result>   
+			<result name="success" type="redirect">/welcome.jsp</result>
+		</action> -->
+		
+		<!-- <action name="forward" class="me.lishuai.login.ForwardAction">
+			<result>/${pageName}.jsp</result>
+		</action> -->
+		
+		<!-- OK -->
+		<action name="*">
+			<result>/WEB-INF/content/{1}.jsp</result>
+		</action>
+		<!-- <action name="registe" class="me.lishuai.login.LoginAction" method="registe">
+			<result name="input">/login.jsp</result>
+			<result name="error">/err.jsp</result>   
+			<result name="success">/welcome.jsp</result>
+		</action> -->
+	</package>
+	<!-- include file="struts-login.xml" /-->
+</struts>
+          
