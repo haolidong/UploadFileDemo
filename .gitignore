@@ -1,3 +1,4 @@
 # ignore file
 build/*
 *.class
+*.jar
