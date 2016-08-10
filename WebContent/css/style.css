@@ -2,30 +2,31 @@
  * 2016/08/05
  */
 
- html, body, div, span, applet, object, iframe,
- h1, h2, h3, h4, h5, h6, p, blockquote, pre,
- a, abbr, acronym, address, big, cite, code,
- del, dfn, em, img, ins, kbd, q, s, samp,
- small, strike, strong, sub, sup, tt, var,
- b, u, i, center,
- dl, dt, dd, ol, ul, li,
- fieldset, form, label, legend,
- table, caption, tbody, tfoot, thead, tr, th, td,
- article, aside, canvas, details, embed,
- figure, figcaption, footer, header, hgroup,
- menu, nav, output, ruby, section, summary,
- time, mark, audio, video {
- 	margin: 0;
- 	padding: 0;
- 	border: 0;
- }
+/* css reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
 
 
 /* body默认是有margin的 */
 html, body {
  	height: 100%;
   /*overflow: hidden;*/
- }
+}
 body {
   min-width: 1000px;
   min-height: 500px;
@@ -33,7 +34,7 @@ body {
   font-family: "Helvitica Neue",Helvitica,Arial,
                "Hiragino Sans GB","Microsoft YaHei",
                "Arial Regular","Microsoft JhengHei",sans-serif;
- }
+}
 
 
 img.logo {
@@ -117,14 +118,15 @@ h1 {
   height: 100%;
   cursor: pointer;
 }
-.select-file .upload-operation {
+.select-file .upload-operation,
+.select-file .continue-operation {
   display: none;
 }
 .selected .upload-operation {
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 40px;
+  height: 100%;
 }
 .upload-operation > span {
   display: block;
@@ -133,13 +135,12 @@ h1 {
   flex-grow: 1;
   margin: auto 10px;
   text-align: left;
-  max-width: 50%;
-
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .upload-operation > span:not(:first-child) {
+  flex-shrink: 0;
   padding: 3px 10px;
   margin-right: 10px;
   height: 20px;
@@ -165,7 +166,8 @@ h1 {
   max-width: 90%;
   max-height: 85%;
 }
-.preview .selected {
+.preview .selected,
+.preview .after-uploaded {
   top: 100%;
   transform: translate(-50%, -100%);
   width: 100%;
@@ -175,7 +177,8 @@ h1 {
   border-radius: 0;
   transition: all .5s;
 }
-.selected > span:first-child {
+.selected > span:first-child,
+.after-uploaded > span:first-child {
   display: none;
 }
 
@@ -184,9 +187,31 @@ h1 {
   padding: 5px;
 }*/
 
+.after-uploaded .continue-operation {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.continue-operation span {
+  /*display: block;*/
+  flex-shrink: 0;
+  padding: 3px 10px;
+  margin: auto 10px;
+  height: 20px;
+  line-height: 20px;
+  border: 2px solid white;
+  cursor: pointer;
+}
+.continue-operation span:hover {
+  background-color: white;
+  color: rgb(0, 161, 251);
+}
 
 
-/*******************已选择文件************************/
+
+/*******************已上传文件************************/
 .result .header {
   height: 40px;
   background: -webkit-linear-gradient(-66deg, rgb(0, 149, 248), #00a8ff);
@@ -205,9 +230,13 @@ h1 {
 .back span {
   float: left;
   display: block;
-  line-height: 40px;
   padding: 0;
   margin-left: 2px;
+  max-width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 40px;
 }
 .result-list span.back {
   display: none;
@@ -275,7 +304,6 @@ h1 {
 }
 .file-list .list-item {
   position: relative;
-  /*left: 0;*/
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -283,10 +311,15 @@ h1 {
   border-bottom: 1px solid #eee;
   cursor: default;
 }
+.uploaded {
+  left: -100%;
+  height: 0;
+}
 .file-list .list-item:hover {
   background-color: #eee;
 }
 .list-item img {
+  flex-shrink: 0;
   width: 60px;
   height: 60px;
   margin: 10px;
@@ -294,17 +327,16 @@ h1 {
 
 .list-item .info {
   flex-grow: 1;
-  height: 100%;
+  overflow: hidden;
 }
 .info p {
+  max-width: 95%;
   overflow: hidden;
   white-space: nowrap;
-  /*word-break: break-all;*/
   text-overflow: ellipsis;
 }
 .info p:first-child {
   font-size: 16px;
-  /*line-height: 2;*/
 }
 .info p:last-child {
   margin-top: 15px;
@@ -313,8 +345,8 @@ h1 {
 }
 
 .list-item .operation {
+  flex-shrink: 0;
   width: 90px;
-  /*height: 100%;*/
   font-size: 16px;
 }
 .operation .icon {
@@ -326,7 +358,7 @@ h1 {
   transition: all .5s;
 }
 .operation .display {
-  margin-right: 5px;
+  margin-right: 10px;
   color: #00a8ff;
 }
 .operation .display:hover {

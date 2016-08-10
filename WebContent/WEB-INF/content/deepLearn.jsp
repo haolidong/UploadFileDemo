@@ -12,25 +12,13 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.mousewheel.min.js"></script>
 <script src="js/jquery.mCustomScrollbar.min.js"></script>
-<script src="js/clickFile.js"></script>
+<script src="js/upload.js"></script>
 </head>
 <body>
 
   <img class="logo" src="images/logo.png" alt="东莞华南设计创新院">
 
   <h1>Upload File Demo</h1>
-
-	<%-- <form class="upload" action="input-test" method="post">
-		<input type="text" name="userName" placeholder="user name"/>
-		<input type="password" name="password" placeholder="password"/>
-		<button type="submit">SUBMIT</button>
-	</form> --%>
-
-	<%-- <s:form action="input-test">
-		<s:textfield name="username" />
-		<s:textfield name="password" />
-		<s:submit value="submit" />
-	</s:form> --%>
 
   <!-- 文件上传，须设置enctype和method -->
   <div class="select-upload">
@@ -46,7 +34,9 @@
       <img src="">
 
       <div class="select-file hover">
+
         <span>选择文件</span>
+        <%-- 选择文件后的上传操作 --%>
         <div class="upload-operation">
           <span class="file-name"></span>
           <span class="confirm-upload">
@@ -56,7 +46,18 @@
             <i class="remove icon"></i>取消
           </span>
         </div>
+        <%-- 上传文件后的操作 --%>
+        <div class="continue-operation">
+          <span class="continue-select">
+            <i class="upload icon"></i>继续选择
+          </span>
+          <span class="cancel">
+            <i class="remove icon"></i>取消
+          </span>
+        </div>
+
       </div>
+
     </div>
   </div>
 
@@ -69,6 +70,7 @@
     <div class="content">
       <!-- 已上传文件列表 -->
       <ul class="file-list">
+
         <li class="list-item">
           <img src="images/test1.gif" alt="logo">
           <div class="info">
@@ -76,107 +78,10 @@
             <p>2016-08-08 13:10:10</p>
           </div>
           <div class="operation">
-            <i class="unhide icon display" title="查看图片"></i>
-            <i class="trash outline icon delete" title="删除图片"></i>
+            <i class="unhide icon display" title="查看图片">
+            </i><i class="trash outline icon delete" title="删除图片"></i>
           </div>
         </li>
-
-        <li class="list-item">
-          <img src="images/test2.gif" alt="logo">
-          <div class="info">
-            <p>marker.png</p>
-            <p>2016-08-08 13:10:10</p>
-          </div>
-          <div class="operation">
-            <i class="unhide icon display" title="查看图片"></i>
-            <i class="trash outline icon delete" title="删除图片"></i>
-          </div>
-        </li>
-
-        <li class="list-item">
-          <img src="images/test3.gif" alt="logo">
-          <div class="info">
-            <p>marker.png</p>
-            <p>2016-08-08 13:10:10</p>
-          </div>
-          <div class="operation">
-            <i class="unhide icon display" title="查看图片"></i>
-            <i class="trash outline icon delete" title="删除图片"></i>
-          </div>
-        </li>
-
-        <li class="list-item">
-          <img src="images/test4.gif" alt="logo">
-          <div class="info">
-            <p>marker.png</p>
-            <p>2016-08-08 13:10:10</p>
-          </div>
-          <div class="operation">
-            <i class="unhide icon display" title="查看图片"></i>
-            <i class="trash outline icon delete" title="删除图片"></i>
-          </div>
-        </li>
-
-        <li class="list-item">
-          <img src="images/test5.gif" alt="logo">
-          <div class="info">
-            <p>marker.png</p>
-            <p>2016-08-08 13:10:10</p>
-          </div>
-          <div class="operation">
-            <i class="unhide icon display" title="查看图片"></i>
-            <i class="trash outline icon delete" title="删除图片"></i>
-          </div>
-        </li>
-
-        <li class="list-item">
-          <img src="images/test6.jpg" alt="logo">
-          <div class="info">
-            <p>marker.png</p>
-            <p>2016-08-08 13:10:10</p>
-          </div>
-          <div class="operation">
-            <i class="unhide icon display" title="查看图片"></i>
-            <i class="trash outline icon delete" title="删除图片"></i>
-          </div>
-        </li>
-
-        <li class="list-item">
-          <img src="images/test7.jpg" alt="logo">
-          <div class="info">
-            <p>marker.png</p>
-            <p>2016-08-08 13:10:10</p>
-          </div>
-          <div class="operation">
-            <i class="unhide icon display" title="查看图片"></i>
-            <i class="trash outline icon delete" title="删除图片"></i>
-          </div>
-        </li>
-
-        <li class="list-item">
-          <img src="images/test8.jpg" alt="logo">
-          <div class="info">
-            <p>marker.png</p>
-            <p>2016-08-08 13:10:10</p>
-          </div>
-          <div class="operation">
-            <i class="unhide icon display" title="查看图片"></i>
-            <i class="trash outline icon delete" title="删除图片"></i>
-          </div>
-        </li>
-
-        <li class="list-item">
-          <img src="images/test9.jpg" alt="logo">
-          <div class="info">
-            <p>marker.png</p>
-            <p>2016-08-08 13:10:10</p>
-          </div>
-          <div class="operation">
-            <i class="unhide icon display" title="查看图片"></i>
-            <i class="trash outline icon delete" title="删除图片"></i>
-          </div>
-        </li>
-
 
       </ul>
       <!-- 图片查看 -->
