@@ -37,10 +37,12 @@ $(document).ready(function() {
       initLoaded = true;
     }
 
+    var now = new Date();
     var imgSrc = $('.preview>img').attr('src');
     var fileName = $('.file-name').html();
     uploadedFile.src = imgSrc;
     uploadedFile.name = fileName;
+    uploadedFile.time = getNow();
     uploaded = true;
 
     var form = new FormData($('#uploadForm')[0]);
@@ -127,13 +129,15 @@ $(document).ready(function() {
   function initLoad(){
     $.getJSON('load', function(json, textStatus) {
         if(textStatus === 'success'){
+          // 排序
+          var result = resultSort(json);
           // 加载
           var total = json.total;
           var items = "";
           for(var i = 0; i < total; ++i){
-            items += '<li class="list-item"><img src="' + json.items[i].src + '" alt="logo">'
-                   + '<div class="info"><p title="' +json.items[i].name + '">'
-                   + json.items[i].name + '</p><p>'+ json.items[i].time + '</p></div>'
+            items += '<li class="list-item"><img src="' + json.items[result[i]].src + '" alt="logo">'
+                   + '<div class="info"><p title="' +json.items[result[i]].name + '">'
+                   + json.items[result[i]].name + '</p><p>'+ json.items[result[i]].time + '</p></div>'
                    + '<div class="operation"><i class="unhide icon display" title="查看图片"></i>'
                    + '<i class="trash outline icon delete" title="删除图片"></i></div></li>';
           }
@@ -157,7 +161,7 @@ $(document).ready(function() {
     if(uploaded){
       var item = '<li class="list-item uploaded"><img src="' + uploadedFile.src + '" alt="logo">'
                + '<div class="info"><p title="' +uploadedFile.name + '">'
-               + uploadedFile.name + '</p><p>2016-08-08 13:10:10</p></div>'
+               + uploadedFile.name + '</p><p>' + uploadedFile.time + '</p></div>'
                + '<div class="operation"><i class="unhide icon display" title="查看图片"></i>'
                + '<i class="trash outline icon delete" title="删除图片"></i></div></li>';
       $('#mCSB_1_container').prepend(item);
@@ -170,6 +174,33 @@ $(document).ready(function() {
 
     }
     uploaded = false;
+  }
+
+  // 对json的内容按时排序
+  function resultSort(json){
+    var temp;
+    var result = [];
+    var total = json.total;
+    for(var i = 0; i < total; ++i){
+      result.push(i);
+    }
+    // 冒泡排序
+    var exchanged = false;
+    for(i = 0; i < total - 1; ++i){
+      exchanged = false;
+      for(var j = 0; j < total - 1 - i; ++j){
+        if(json.items[result[j]].time < json.items[result[j + 1]].time){
+          temp = result[j];
+          result[j] = result[j + 1];
+          result[j + 1] = temp;
+          exchanged = true;
+        }
+      }
+      if(!exchanged) {
+        break;
+      }
+    }
+    return result;
   }
 
   //建立一个可存取到该file的url
@@ -185,5 +216,23 @@ $(document).ready(function() {
     return url ;
   } // 上传文件的参数
 
+  // 获取yyyy-mm-dd hh:mm:ss格式的当前时间
+  function getNow(){
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = addZero(now.getMonth() + 1);
+    var day = addZero(now.getDate());
+    var hour = addZero(now.getHours());
+    var min = addZero(now.getMinutes());
+    var sec = addZero(now.getSeconds());
+    return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+  }
+  // 在小于10的数字前加0
+  function addZero(num){
+    if(num < 10){
+      return "0" + num;
+    }
+    return num;
+  }
 
 });
