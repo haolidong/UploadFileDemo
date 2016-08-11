@@ -21,6 +21,10 @@ public class UploadAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	// 允许上传的图片类型
+//	private String allowTypes = "image/png,image/jpg,image/jpeg,image/gif,image/ico,image/svg"; 
+	private String allowTypes;
+	
 	// 文件标题请求参数
 	private String title;
 	
@@ -30,7 +34,16 @@ public class UploadAction extends ActionSupport {
 	private String uploadFileFileName;
 	
 	// 文件保存路径
-	private String savePath = "/upload";
+//	private String savePath = "/upload";
+	private String savePath;
+	
+	public String getAllowTypes(){
+		return allowTypes;
+	}
+	
+	public void setAlloTypes(String allowTypes){
+		this.allowTypes = allowTypes;
+	}
 	
 	public String getTitle() {
 		return title;
@@ -65,12 +78,29 @@ public class UploadAction extends ActionSupport {
 	}
 
 	public String getSavePath() {
-		return ServletActionContext.getServletContext().getRealPath("/WEB-INF/" + savePath + "/");
+		return ServletActionContext.getServletContext().getRealPath("/" + savePath + "/");
 	}
 
 	public void setSavePath(String savePath) {
 		this.savePath = savePath;
 	}
+	
+	private String typeFilter(String imgType){
+		String[] types = allowTypes.split(",");
+		for(String type : types){
+			if(type.equals(imgType)){
+				return null;
+			}
+		}
+		return ERROR;
+	}
+	
+//	@Override
+//	public void validate() {
+//		if(typeFilter(getUploadFileContentType()) != null){
+//			addFieldError("typeError", "不允许上传此格式图片");
+//		}
+//	}
 
 	public String execute() throws Exception {
 		FileOutputStream fos = new FileOutputStream(getSavePath() + getUploadFileFileName());

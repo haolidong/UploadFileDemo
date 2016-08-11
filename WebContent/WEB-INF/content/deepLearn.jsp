@@ -26,7 +26,7 @@
       <span><i class="desktop icon"></i>选择文件</span>
     </div>
     <form id="uploadForm" action="upload" enctype="multipart/form-data" method="post">
-      <input type="file" name="uploadFile" id="uploadFile">
+      <input type="file" name="uploadFile" id="uploadFile" accept="image/*">
       <button type="reset" id="reset">reset</button>
     </form>
     <div class="preview">
@@ -69,7 +69,19 @@
     </div>
     <div class="content">
       <!-- 已上传文件列表 -->
-      <ul class="file-list">
+      <ul class="file-list init-load">
+
+        <%-- <li class="list-item">
+          <img src="images/test1.gif" alt="logo">
+          <div class="info">
+            <p>marker.png</p>
+            <p>2016-08-08 13:10:10</p>
+          </div>
+          <div class="operation">
+            <i class="unhide icon display" title="查看图片">
+            </i><i class="trash outline icon delete" title="删除图片"></i>
+          </div>
+        </li>
 
         <li class="list-item">
           <img src="images/test1.gif" alt="logo">
@@ -82,6 +94,42 @@
             </i><i class="trash outline icon delete" title="删除图片"></i>
           </div>
         </li>
+
+        <li class="list-item">
+          <img src="images/test1.gif" alt="logo">
+          <div class="info">
+            <p>marker.png</p>
+            <p>2016-08-08 13:10:10</p>
+          </div>
+          <div class="operation">
+            <i class="unhide icon display" title="查看图片">
+            </i><i class="trash outline icon delete" title="删除图片"></i>
+          </div>
+        </li>
+
+        <li class="list-item">
+          <img src="images/test1.gif" alt="logo">
+          <div class="info">
+            <p>marker.png</p>
+            <p>2016-08-08 13:10:10</p>
+          </div>
+          <div class="operation">
+            <i class="unhide icon display" title="查看图片">
+            </i><i class="trash outline icon delete" title="删除图片"></i>
+          </div>
+        </li>
+
+        <li class="list-item">
+          <img src="images/test1.gif" alt="logo">
+          <div class="info">
+            <p>marker.png</p>
+            <p>2016-08-08 13:10:10</p>
+          </div>
+          <div class="operation">
+            <i class="unhide icon display" title="查看图片">
+            </i><i class="trash outline icon delete" title="删除图片"></i>
+          </div>
+        </li> --%>
 
       </ul>
       <!-- 图片查看 -->

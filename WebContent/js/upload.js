@@ -3,18 +3,14 @@
  */
 
 $(document).ready(function() {
+  // 初始加载是否完成
+  var initLoaded = false;
   // 上传文件的参数
   var uploaded = false;
   var uploadedFile = {};
 
-  // 自定义的滚动科
-  $('.file-list').mCustomScrollbar({
-		scrollInertia: 200,
-		mouseWheel:{ scrollAmount: 400 },
-    callbacks:{
-      onTotalScrollBack: addUploadedFile
-    }
-	});
+  // 加载已上传文件
+  initLoad();
 
   // 选择文件
   $('.select-file>span:first-child').click(function(event) {
@@ -36,17 +32,34 @@ $(document).ready(function() {
 
   // 确认上传
   $('.confirm-upload').click(function(event) {
+    if(!initLoaded){
+      $('.file-list').removeClass('init-load');
+      initLoaded = true;
+    }
+
     var imgSrc = $('.preview>img').attr('src');
     var fileName = $('.file-name').html();
     uploadedFile.src = imgSrc;
     uploadedFile.name = fileName;
     uploaded = true;
-    if($('#mCSB_1_container').css('top').charAt(0) === '0'){
-      // TODO: 上传文件
-      addUploadedFile();
-    }else {
-      $('.file-list').mCustomScrollbar("scrollTo", "top", {callbacks: true});
-    }
+
+    var form = new FormData($('#uploadForm')[0]);
+    $.ajax({
+        url: 'upload',
+        type: 'POST',
+        data: form,
+        processData: false,
+        contentType: false
+    }).success(function(data){
+      if($('#mCSB_1_container').css('top').charAt(0) === '0'){
+        addUploadedFile();
+      }else {
+        $('.file-list').mCustomScrollbar("scrollTo", "top", {callbacks: true});
+      }
+    }).error(function(){
+      alert('upload error!');
+    });
+
   });
 
   // 取消上传
@@ -76,7 +89,7 @@ $(document).ready(function() {
 
   // 查看图片，点击顶部向左箭头，返回列表
   $('.result>.header').on('click', '.back>img', function(event) {
-    $('.content').css('left', '0');
+    $('.content').css('left', 0);
     // 更改头部显示
     $('.result>.header').addClass('result-list').removeClass('result-show');
   });
@@ -85,12 +98,23 @@ $(document).ready(function() {
   $('.file-list').on('click', '.delete', function(event) {
     // 删除图片，并显示删除的动画
     var $item = $(this).parent().parent();
-    $item.animate({left: '-100%'}, 300, function(){
-      $item.animate({height: 0}, 300, function(){
-        // TODO: 删除文件
-        $item.remove();
-      })
-    })
+
+    if(!initLoaded){
+      $('.file-list').removeClass('init-load');
+      initLoaded = true;
+    }
+
+    $.get('delete', {fileName: $item.find('.info>p:first-child').html()}, function(data, textStatus){
+      if(textStatus === 'success'){
+        $item.animate({left: '-100%'}, 300, function(){
+          $item.animate({height: 0}, 300, function(){
+            // TODO: 删除文件
+            $item.remove();
+          })
+        })
+      }
+    });
+
     // 阻止事件冒泡
     return false;
   });
@@ -98,6 +122,35 @@ $(document).ready(function() {
 
 
   /***********相关功能函数***********/
+
+  // 进入页面，加载已上传文件
+  function initLoad(){
+    $.getJSON('load', function(json, textStatus) {
+        if(textStatus === 'success'){
+          // 加载
+          var total = json.total;
+          var items = "";
+          for(var i = 0; i < total; ++i){
+            items += '<li class="list-item"><img src="' + json.items[i].src + '" alt="logo">'
+                   + '<div class="info"><p title="' +json.items[i].name + '">'
+                   + json.items[i].name + '</p><p>'+ json.items[i].time + '</p></div>'
+                   + '<div class="operation"><i class="unhide icon display" title="查看图片"></i>'
+                   + '<i class="trash outline icon delete" title="删除图片"></i></div></li>';
+          }
+          $('.file-list').html(items);
+          // 自定义的滚动条
+          $('.file-list').mCustomScrollbar({
+            scrollInertia: 200,
+            mouseWheel:{ scrollAmount: 400 },
+            callbacks:{
+              onTotalScrollBack: addUploadedFile
+            }
+          });
+        }else {
+          alert("error!");
+        }
+    });
+  }
 
   // 增加上传文件到 已上传文件
   function addUploadedFile (){

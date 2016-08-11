@@ -15,39 +15,51 @@
 	
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
 	
+	<constant name="struts.convention.exclude.packages" value="me.lishuai.strutsdemo.actions"/>
+	
 	<!-- Action -->
-	<package name="demo" extends="struts-default"  >
+	<package name="demo" extends="struts-default">
 	
 		<action name="upload" class="me.lishuai.strutsdemo.actions.UploadAction">
 			<!-- 约定优于配置，要使下面的配置生效，须取消struts2的“约定”，移除convention插件 -->
-			<param name="savePath">/upload/</param>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/png,image/gif,image/jpeg,image/ico</param>
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<param name="savePath">upload</param>
 			<result name="success">/WEB-INF/content/upload-success.jsp</result>
 			<result name="input">/WEB-INF/content/upload-input.jsp</result>
 		</action>
-	
-	<!-- 通配符配置method失败，配置class成功，好像只要用{}配置method就报错 -->
-		<!-- <action name="login" class="me.lishuai.login.LoginAction" >
-			<result name="input">/login.jsp</result>
-			<result name="error" type="plainText">
-				<param name="location">/err.jsp</param>
-				<param name="charSet">UTF-8</param>
-			</result>   
-			<result name="success" type="redirect">/welcome.jsp</result>
-		</action> -->
 		
-		<!-- <action name="forward" class="me.lishuai.login.ForwardAction">
-			<result>/${pageName}.jsp</result>
-		</action> -->
+		<action name="download" class="me.lishuai.strutsdemo.actions.DownloadAction">
+			<param name="inputPath">images/test1.gif</param>
+			<result name="success" type="stream">
+				<param name="contentType">image/gif</param>
+				<param name="inputName">targetFile</param>
+				<param name="contentDisposition">download.gif</param>
+			</result>
+			<result name="input">/WEB-INF/content/download-input.jsp</result>
+		</action>
+		
+		<action name="delete" class="me.lishuai.strutsdemo.actions.DeleteAction">
+			<param name="filePath">upload</param>
+		</action>
+		
+		<action name="load" class="me.lishuai.strutsdemo.actions.LoadAction">
+			<param name="fileDir">upload</param>
+			<result name="success" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">result</param>
+			</result>
+		</action>
+
 		
 		<!-- OK -->
-		<action name="*">
+		<!-- <action name="*">
 			<result>/WEB-INF/content/{1}.jsp</result>
-		</action>
-		<!-- <action name="registe" class="me.lishuai.login.LoginAction" method="registe">
-			<result name="input">/login.jsp</result>
-			<result name="error">/err.jsp</result>   
-			<result name="success">/welcome.jsp</result>
 		</action> -->
+
 	</package>
 	<!-- include file="struts-login.xml" /-->
 </struts>
